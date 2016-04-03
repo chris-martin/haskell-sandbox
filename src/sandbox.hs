@@ -1,34 +1,33 @@
 module Main (main) where
 
+import           Prelude                  hiding (Left, Right)
+
 import           Test.QuickCheck
 import           Test.QuickCheck.Checkers
 import           Test.QuickCheck.Classes
 
 main :: IO ()
 main = do
-  let t = undefined :: Nope (Int, String, Char)
+  let t = undefined :: PhhhbbtttEither String (Int, String, Char)
   mapM_ quickBatch [functor t, applicative t, monad t]
 
----------------------------------
+data PhhhbbtttEither b a = Left a | Right b deriving (Eq, Show)
 
-data Nope a = NopeDotJpg deriving (Eq, Show)
-
-instance EqProp (Nope a) where
+instance (Eq a, Show a, Eq b, Show b) => EqProp (PhhhbbtttEither b a) where
   (=-=) = eq
 
-instance Arbitrary (Nope a) where
-  arbitrary = return NopeDotJpg
+instance (Arbitrary a, Arbitrary b) => Arbitrary (PhhhbbtttEither b a) where
+  arbitrary = oneof [Left <$> arbitrary, Right <$> arbitrary]
 
--- | >>> "hi"
--- "hi"
-instance Functor Nope where
-  fmap  _ _ = NopeDotJpg
+instance Functor (PhhhbbtttEither b) where
+  fmap f (Left b) = Left (f b)
+  fmap _ (Right a) = Right a
 
-instance Applicative Nope where
-  pure  _   = NopeDotJpg
-  (<*>) _ _ = NopeDotJpg
+instance Applicative (PhhhbbtttEither a) where
+  pure = Left
+  Right x <*> _ = Right x
+  Left  f <*> x = fmap f x
 
-instance Monad Nope where
-  (>>=) _ _ = NopeDotJpg
-
---------------------------------
+instance Monad (PhhhbbtttEither a) where
+  (Left x)  >>= f = f x
+  (Right x) >>= _ = Right x
