@@ -20,7 +20,7 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (PhhhbbtttEither b a) where
   arbitrary = oneof [Left <$> arbitrary, Right <$> arbitrary]
 
 instance Functor (PhhhbbtttEither b) where
-  fmap f (Left b) = Left (f b)
+  fmap f (Left b) = Left (f "x")
   fmap _ (Right a) = Right a
 
 instance Applicative (PhhhbbtttEither a) where
