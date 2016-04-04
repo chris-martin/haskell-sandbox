@@ -1,32 +1,23 @@
-module Main (main) where
-
-import           Prelude
+module Main (main, l1, l2, a, meh, flipType) where
 
 import           Test.QuickCheck
 import           Test.QuickCheck.Checkers
 import           Test.QuickCheck.Classes
 
-type X = Int
-
 main :: IO ()
-main = do
-  let t = undefined :: Identity (X, X, X)
-  mapM_ quickBatch [functor t, applicative t, monad t]
+main = return ()
 
-newtype Identity a = Identity a deriving (Eq, Ord, Show)
+l1 :: Monad m => (a -> b) -> m a -> m b
+l1 = (<$>)
 
-instance (Eq a, Show a) => EqProp (Identity a) where
-  (=-=) = eq
+l2 :: Monad m => (a -> b -> c) -> m a -> m b -> m c
+l2 f x y = f <$> x <*> y
 
-instance Arbitrary a => Arbitrary (Identity a) where
-  arbitrary = Identity <$> arbitrary
+a :: Monad m => m a -> m (a -> b) -> m b
+a = flip (<*>)
 
-instance Functor Identity where
-  fmap f (Identity x) = Identity (f x)
+meh :: Monad m => [a] -> (a -> m b) -> m [b]
+meh xs f = flipType (fmap f xs)
 
-instance Applicative Identity where
-  pure = Identity
-  Identity f <*> Identity x = Identity (f x)
-
-instance Monad Identity where
-  Identity x >>= f = f x
+flipType :: (Monad m) => [m a] -> m [a]
+flipType = foldr (\x acc -> (:) <$> x <*> acc) (pure [])
