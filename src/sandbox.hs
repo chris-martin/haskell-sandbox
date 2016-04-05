@@ -32,14 +32,12 @@ beta a b (e1 :- e2) = (beta a b e1) :- (beta a b e2)
 beta a b (e1 :* e2) = (beta a b e1) :* (beta a b e2)
 beta a b (e1 :/ e2) = (beta a b e1) :/ (beta a b e2)
 
-beta a b e@(Let bindings body) =
+-- The variable is shadowed by a let binding, so return
+-- the original expression unmodified.
+beta a _ e@(Let bindings _) | bindingsContains a bindings = e
 
-    -- The variable is shadowed by a let binding, so return
-    -- the original expression unmodified.
-    if bindingsContains a bindings then e
-
-    -- Apply @beta a b@ recursively to the body of the let expression.
-    else Let bindings (beta a b body)
+-- Apply @beta a b@ recursively to the body of the let expression.
+beta a b (Let bindings body) = Let bindings (beta a b body)
 
 bindingsContains :: String -> [(String, Expr)] -> Bool
 bindingsContains x bindings = Data.Maybe.isJust $ Data.List.find ((== x) . fst) bindings
