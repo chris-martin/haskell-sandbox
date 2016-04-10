@@ -17,6 +17,11 @@ mapM     :: (Monad       f, Traversable t) =>   (a -> f b) -> t a -> f (t b)
 traverse :: (Applicative f, Traversable t) =>   (a -> f b) -> t a -> f (t b)
 foldMap  ::                 Monoid      m  =>   (a -> m)   -> t a -> m
 
+-- Function composition
+
+(.)   ::            (b ->   c) -> (a ->   b) -> a ->   c
+(<=<) :: Monad m => (b -> m c) -> (a -> m b) -> a -> m c
+
 -- Filtering
 
 filter  ::                (a ->   Bool) ->  [a] ->   [a]
@@ -37,7 +42,8 @@ sequenceA ::  Applicative f                 => t (f a) -> f (t a)
 sequence  :: (Monad       f, Traversable t) => t (f a) -> f (t a)
 join      ::  Monad       f                 => f (f a) -> f a
 
-
+(.) = undefined
+(<=<) = undefined
 ($) = undefined
 ($>) = undefined
 (*>) = undefined
