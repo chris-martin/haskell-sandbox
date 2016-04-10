@@ -4,7 +4,6 @@ import           Control.Monad (MonadPlus)
 import           Prelude       (Applicative, Bool, Functor, Monad, Monoid,
                                 Traversable, undefined)
 
-
 -- Function application
 
 ($)      ::                                     (a ->   b) ->   a ->   b
