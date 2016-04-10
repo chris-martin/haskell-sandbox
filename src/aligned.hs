@@ -37,7 +37,7 @@ const ::                    a ->   b ->   a
 
 -- Restructuring
 
-sequenceA ::  Applicative f                 => t (f a) -> f (t a)
+sequenceA :: (Applicative f, Traversable t) => t (f a) -> f (t a)
 sequence  :: (Monad       f, Traversable t) => t (f a) -> f (t a)
 join      ::  Monad       f                 => f (f a) -> f a
 
