@@ -1,0 +1,7 @@
+resolver: lts-7.3
+
+packages:
+  - .
+
+nix:
+  shell-file: shell.nix

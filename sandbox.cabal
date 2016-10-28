@@ -1,19 +1,23 @@
-name:                sandbox
-version:             0.1.0.0
-license:             Apache-2.0
-license-file:        LICENSE
-author:              Chris Martin
-maintainer:          ch.martin@gmail.com
-build-type:          Simple
-cabal-version:       >=1.10
+-- This file has been generated from package.yaml by hpack version 0.14.0.
+--
+-- see: https://github.com/sol/hpack
 
-executable haskell-sandbox
-  main-is:             sandbox.hs
-  -- other-modules:
-  build-depends:       base >=4.8 && <4.9
-                     , QuickCheck
-                     , checkers
-                     , random
-                     , safe
-  hs-source-dirs:      src
-  default-language:    Haskell2010
+name:           sandbox
+version:        0.1.0.0
+author:         Chris Martin
+maintainer:     ch.martin@gmail.com
+license:        Apache-2.0
+build-type:     Simple
+cabal-version:  >= 1.10
+
+executable sandbox
+  main-is: sandbox.hs
+  hs-source-dirs:
+      src
+  build-depends:
+      base
+    , QuickCheck
+    , checkers
+    , random
+    , safe
+  default-language: Haskell2010
