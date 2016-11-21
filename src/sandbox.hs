@@ -1,18 +1,11 @@
-module Main (main, Nullable, isNull) where
-
-import           Data.IORef
-
-x :: IO (IORef (Maybe (IORef (Maybe Bool))))
-x = newIORef . Just =<< newIORef Nothing
+module Main (main) where
 
 main :: IO ()
-main = undefined
+main = mapM_ (putStrLn . show . isPowOf2) [1..10]
 
-data Nullable a = Null | Val a
-
-isNull :: Nullable a -> Bool
-isNull Null = True
-isNull _ = False
-
-fold :: b -> (a -> b) -> Nullable a -> b
-fold = undefined
+isPowOf2 :: Int -> Maybe Int
+isPowOf2 n =
+    if (x `mod` 1.0 /= 0.0) then Nothing
+    else Just (truncate x)
+  where
+    x = logBase (fromIntegral 2) (fromIntegral n)
