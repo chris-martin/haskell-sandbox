@@ -1,19 +1,21 @@
-{-# LANGUAGE OverloadedStrings, OverloadedLists #-}
+{-# LANGUAGE OverloadedLists   #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Sandbox where
 
-import Control.Arrow ((>>>))
-import Data.Char (isSpace)
-import Data.List (foldr)
-import Data.List.NonEmpty (NonEmpty (..), toList, nonEmpty)
-import Data.Function ((&))
-import Data.Functor (fmap, ($>))
-import Data.Text.Lazy (Text, groupBy, append, empty, length, splitAt, splitOn, intercalate)
-import Numeric.Natural (Natural)
-import Data.Bool ((||), not)
-import Data.Maybe (Maybe (..), fromMaybe)
-import Prelude (undefined, fromIntegral)
-import Data.Ord ((<=))
+import           Control.Arrow      ((>>>))
+import           Data.Bool          (not, (||))
+import           Data.Char          (isSpace)
+import           Data.Function      ((&))
+import           Data.Functor       (fmap, ($>))
+import           Data.List          (foldr)
+import           Data.List.NonEmpty (NonEmpty (..), nonEmpty, toList)
+import           Data.Maybe         (Maybe (..), fromMaybe)
+import           Data.Ord           ((<=))
+import           Data.Text.Lazy     (Text, append, empty, groupBy, intercalate,
+                                     length, splitAt, splitOn)
+import           Numeric.Natural    (Natural)
+import           Prelude            (fromIntegral, undefined)
 
 -- https://thecleancoder.blogspot.ca/2010/10/craftsman-62-dark-path.html
 
@@ -67,7 +69,7 @@ pack column = packings >>> foldr f Nothing
   where
     f :: Packing -> Maybe Packing -> Maybe Packing
     f x@(packed, _) Nothing | fromIntegral (length packed) <= column = Just x
-    f _ y = y
+    f _ y                   = y
 
 -- This one calls for a whole battery of tests, to cover all of the cases.
 
