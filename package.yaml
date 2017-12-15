@@ -6,7 +6,9 @@ maintainer: ch.martin@gmail.com
 
 dependencies:
   - base
+  - text
 
-library:
-  source-dirs: src
-  exposed-modules: Sandbox
+executables:
+  sandbox:
+    source-dirs: src
+    main: sandbox.hs
