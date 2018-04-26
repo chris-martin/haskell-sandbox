@@ -1,3 +1,2 @@
-*.cabal
 /dist
 cabal.config
